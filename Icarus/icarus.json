@@ -89,4 +89,28 @@
   "environment": {
     "type": "standard"
   }
+  ,
+  "container": {
+    "dockerfile": "Icarus/Dockerfile",
+    "image": "njordpuffer/icarus:latest",
+    "run": {
+      "ports": [
+        "17777:17777",
+        "27015:27015/udp",
+        "15000:15000/udp"
+      ],
+      "env": {
+        "STEAM_USER": "{{data.steam_user}}",
+        "STEAM_PASS": "{{data.steam_password}}",
+        "BRANCH": "{{data.branch}}",
+        "SERVER_NAME": "{{data.server_name}}",
+        "SERVER_PASSWORD": "{{data.server_password}}",
+        "SAVE_NAME": "{{data.save_name}}",
+        "MAX_PLAYERS": "{{data.max_players}}",
+        "PORT": "{{data.port}}",
+        "QUERY_PORT": "{{data.query_port}}",
+        "BEACON_PORT": "{{data.beacon_port}}"
+      }
+    }
+  }
 }

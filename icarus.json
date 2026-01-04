@@ -1,0 +1,92 @@
+{
+  "display": "Icarus Dedicated Server",
+  "type": "icarus-steamcmd",
+  "data": {
+    "steam_user": {
+      "name": "Steam username",
+      "type": "string",
+      "required": true,
+      "default": "anonymous"
+    },
+    "steam_password": {
+      "name": "Steam password (empty for anonymous)",
+      "type": "string",
+      "required": false,
+      "default": ""
+    },
+    "branch": {
+      "name": "Steam branch (public/beta name)",
+      "type": "string",
+      "required": true,
+      "default": "public"
+    },
+    "server_name": {
+      "name": "Server name",
+      "type": "string",
+      "required": true,
+      "default": "Icarus Server"
+    },
+    "server_password": {
+      "name": "Server password (blank for open)",
+      "type": "string",
+      "required": false,
+      "default": ""
+    },
+    "save_name": {
+      "name": "Save/session name",
+      "type": "string",
+      "required": true,
+      "default": "Persistent"
+    },
+    "max_players": {
+      "name": "Max players",
+      "type": "number",
+      "required": true,
+      "default": 8,
+      "min": 1
+    },
+    "port": {
+      "name": "Game port",
+      "type": "number",
+      "required": true,
+      "default": 17777
+    },
+    "query_port": {
+      "name": "Query port",
+      "type": "number",
+      "required": true,
+      "default": 27015
+    },
+    "beacon_port": {
+      "name": "Beacon port",
+      "type": "number",
+      "required": true,
+      "default": 15000
+    }
+  },
+  "install": [
+    {
+      "type": "command",
+      "commands": [
+        "mkdir -p icarus"
+      ]
+    },
+    {
+      "type": "command",
+      "commands": [
+        "steamcmd +force_install_dir {{root}}/icarus +login {{data.steam_user}} {{data.steam_password}} +app_update 2089300 -beta {{data.branch}} validate +quit"
+      ]
+    }
+  ],
+  "run": {
+    "stop": "^C",
+    "command": "cd {{root}}/icarus && ./Icarus/Binaries/Linux/IcarusServer-Linux-Shipping -log -SteamServerName=\"{{data.server_name}}\" -SteamServerPassword=\"{{data.server_password}}\" -SaveName=\"{{data.save_name}}\" -SessionName=\"{{data.save_name}}\" -PORT={{data.port}} -QueryPort={{data.query_port}} -BeaconPort={{data.beacon_port}} -SteamMaxPlayers={{data.max_players}}",
+    "workingDirectory": "{{root}}/icarus",
+    "environmentVariables": {
+      "LD_LIBRARY_PATH": "."
+    }
+  },
+  "environment": {
+    "type": "standard"
+  }
+}

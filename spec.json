@@ -1,0 +1,8 @@
+{
+  "templates": {
+    "icarus": {
+      "display": "Icarus Dedicated Server",
+      "file": "Icarus/icarus.json"
+    }
+  }
+}
